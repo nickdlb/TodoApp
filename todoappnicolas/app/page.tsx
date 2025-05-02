@@ -39,8 +39,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center py-10">
-      <main className="pt-20">
+    <div className="flex items-center justify-center">
+      <main className="py-20"> 
         <h1 className="mt-8 mb-8 text-center text-3xl font-semibold">TodoApp</h1>
         <div className="flex gap-2 items-center justify-center">
           <form className="flex gap-2 w-full" id="tarefa" onSubmit={(e) => {
@@ -58,21 +58,21 @@ export default function Home() {
         </div>
         <div className="flex mt-6 gap-4 justify-between">
           <div className='flex gap-2'>
-            <Button className={`bg-gray-700 text-white ${filter === 'all' ? 'bg-white text-gray-700' : ''}`} onClick={() => setFilter('all')}>
-              Todas
-            </Button>
-            <Button className={`bg-gray-700 text-white ${filter === 'Ativa' ? 'bg-white text-gray-700' : ''}`} onClick={() => setFilter('Ativa')}>
+            <Button className={`bg-gray-700 text-white ${filter === 'Ativa' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-700' : ''}`} onClick={() => setFilter('Ativa')}>
               Ativas
             </Button>
-            <Button className={`bg-gray-700 text-white ${filter === 'Concluida' ? 'bg-white text-gray-700' : ''}`} onClick={() => setFilter('Concluida')}>
+            <Button className={`bg-gray-700 text-white ${filter === 'Concluida' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-700 hover:text-gray-900' : ''}`} onClick={() => setFilter('Concluida')}>
               Concluídas
+            </Button>
+            <Button className={`bg-gray-700 text-white ${filter === 'all' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-700' : ''}`} onClick={() => setFilter('all')}>
+              Todas
             </Button>
           </div>
           <Select onValueChange={setSortCriteria} defaultValue={sortCriteria}>
-            <SelectTrigger className="w-[180px] !bg-gray-800">
+            <SelectTrigger className="w-[180px] !bg-gray-800 text-white">
               <SelectValue placeholder="Ordenar por..." />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="">
               <SelectItem value="date-desc">Data (Mais Recente)</SelectItem>
               <SelectItem value="date-asc">Data (Mais Antiga)</SelectItem>
               <SelectItem value="name-asc">Nome (A-Z)</SelectItem>
@@ -80,7 +80,7 @@ export default function Home() {
             </SelectContent>
           </Select>
         </div>
-        <div className="scrollbarcss mt-8 px-4 max-h-[500px] overflow-y-auto bg-gray-800 pt-4 pb-4 rounded-tl-3xl rounded-bl-3xl rounded-tr-sm rounded-br-sm">
+        <div className="scrollbarcss mt-8 px-4 max-h-[500px] overflow-y-auto bg-gray-800 pt-4 pb-4 rounded-tl-3xl rounded-bl-3xl rounded-tr-sm rounded-br-sm min-w-[840px]">
           <ul className="flex flex-col gap-2">
             {sortedAndFilteredTasks.map((task) => (
               <li key={task.id} className={`${status === 'Concluida' ? 'bg-red-800':''} w-[800] flex items-center gap-4 py-2 px-5 rounded-xl text-white bg-gray-700`}>
