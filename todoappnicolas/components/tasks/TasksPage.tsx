@@ -24,7 +24,7 @@ export default function HomeContent() {
         <FloatingMenu current={activeScreen} onChange={setActiveScreen} />
         {activeScreen === 'tarefas' && (
           <>
-            <h1 className="mt-8 mb-8 text-center text-3xl font-semibold text-white">TodoApp</h1>
+            <h1 className="mt-8 mb-8 text-center text-3xl font-semibold dark:text-white text-gray-700">TodoApp</h1>
             <TaskForm />
             <div className="flex mt-6 gap-4 justify-between">
               <TaskFilterBar />

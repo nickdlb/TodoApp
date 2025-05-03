@@ -60,12 +60,12 @@ export default function TaskForm() {
 
   return (
     <form suppressHydrationWarning onSubmit={handleSubmit} className="flex gap-2 w-full flex-wrap">
-      <Input className="w-[60%] !bg-gray-800 text-white !ring-0" value={tarefa} onChange={(e) => setTarefa(e.target.value)} placeholder="Digite sua tarefa..." />
+      <Input suppressHydrationWarning className="w-[60%] !bg-gray-800 text-white !ring-0" value={tarefa} onChange={(e) => setTarefa(e.target.value)} placeholder="Digite sua tarefa..." />
       <div className="w-[25%] flex gap-4 items-center">
         <Button type="button" onClick={handleIconClick} variant="outline" className="bg-gray-800 text-white hover:bg-gray-700 p-2">
           <CalendarIcon className="h-5 w-5" />
         </Button>
-        <span className="text-sm text-white !min-w-fit">
+        <span className="text-sm dark:text-white text-gray-900 bg-gray-800 font-semibold rounded-md p-2 !min-w-fit">
           {tarefaData ? format(tarefaData, 'dd/MM/yyyy HH:mm') : 'Sem data'}
         </span>
         <input ref={inputRef} type="datetime-local" value={datetimeInput} onChange={handleDatetimeChange} className="sr-only" />

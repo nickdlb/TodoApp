@@ -8,7 +8,8 @@ export const useTaskActions = () => {
     setTasks,
     setTarefa,
     setEditingTaskId,
-    setEditingTaskText
+    setEditingTaskText,
+    setEditingTaskDate
   } = useTaskContext()
 
   const fetchAllTasks = async () => {
@@ -78,6 +79,11 @@ export const useTaskActions = () => {
   const handleEditTask = (id: string, text: string) => {
     setEditingTaskId(id)
     setEditingTaskText(text)
+
+    const tarefa = tasks.find(t => t.id === id)
+    if (tarefa) {
+      setEditingTaskDate(tarefa.date_task)
+    }
   }
 
   const handleSaveTask = async (id: string, newText: string) => {
@@ -105,6 +111,22 @@ export const useTaskActions = () => {
     }
   }
 
+  const handleSaveTaskDate = async (id: string, newDate: string) => {
+    const { error } = await createSupabaseClient
+      .from('tarefas')
+      .update({ date_task: newDate })
+      .eq('id', id)
+
+    if (error) {
+      toast.error('Erro ao atualizar data da tarefa.')
+    } else {
+      toast.success('Data da tarefa atualizada!')
+      setTasks(tasks.map(t =>
+        t.id === id ? { ...t, date_task: newDate } : t
+      ))
+    }
+  }
+
   const handleDeleteTask = async (id: string) => {
     const { error } = await createSupabaseClient
       .from('tarefas')
@@ -126,6 +148,7 @@ export const useTaskActions = () => {
     uncloseTask,
     handleEditTask,
     handleSaveTask,
+    handleSaveTaskDate,
     handleDeleteTask
   }
 }

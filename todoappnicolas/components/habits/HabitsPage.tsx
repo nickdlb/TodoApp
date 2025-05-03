@@ -122,12 +122,48 @@ export default function HabitosPage() {
     }
   }
 
+  const handleDeleteHabito = async (id: string) => {
+    const { error } = await createSupabaseClient.from('habits').delete().eq('id', id)
+    if (error) {
+      toast.error('Erro ao excluir hábito.')
+      return
+    }
+    setHabitos((prev) => prev.filter((h) => h.id !== id))
+    toast.success('Hábito excluído.')
+  }
+
+  const handleEditHabito = async (id: string, newText: string) => {
+    const { error } = await createSupabaseClient.from('habits').update({ text: newText }).eq('id', id)
+    if (error) {
+      toast.error('Erro ao editar hábito.')
+      return
+    }
+    setHabitos((prev) =>
+      prev.map((h) => (h.id === id ? { ...h, text: newText } : h))
+    )
+    toast.success('Hábito atualizado.')
+  }
+
   return (
     <div className="px-6 w-full max-w-3xl mx-auto">
       <h1 className="text-3xl font-bold text-center text-white mb-8">Hábitos</h1>
-      <HabitsForm novoHabito={novoHabito} setNovoHabito={setNovoHabito} frequenciaTipo={frequenciaTipo} setFrequenciaTipo={setFrequenciaTipo} frequenciaX={frequenciaX} setFrequenciaX={setFrequenciaX} onAdicionar={adicionarHabito}/>
+
+      <HabitsForm
+        novoHabito={novoHabito}
+        setNovoHabito={setNovoHabito}
+        frequenciaTipo={frequenciaTipo}
+        setFrequenciaTipo={setFrequenciaTipo}
+        frequenciaX={frequenciaX}
+        setFrequenciaX={setFrequenciaX}
+        onAdicionar={adicionarHabito}
+      />
+
       {(frequenciaTipo === 'semana' || frequenciaTipo === 'semanalmente') && (
-        <HabitsDateSelector diasSelecionados={diasSelecionados} toggleDia={toggleDia} diasDaSemana={diasDaSemana}/>
+        <HabitsDateSelector
+          diasSelecionados={diasSelecionados}
+          toggleDia={toggleDia}
+          diasDaSemana={diasDaSemana}
+        />
       )}
 
       <ul className="space-y-3">
@@ -137,7 +173,13 @@ export default function HabitosPage() {
           <li className="text-gray-400 text-center">Nenhum hábito adicionado ainda.</li>
         ) : (
           habitos.map((habito) => (
-            <HabitsItem key={habito.id} habito={habito} abreviarDias={abreviarDias} />
+            <HabitsItem
+              key={habito.id}
+              habito={habito}
+              abreviarDias={abreviarDias}
+              onDelete={handleDeleteHabito}
+              onEdit={handleEditHabito}
+            />
           ))
         )}
       </ul>

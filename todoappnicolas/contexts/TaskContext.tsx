@@ -31,6 +31,8 @@ interface TaskContextProps {
   setEditingTaskId: (id: string | null) => void
   editingTaskText: string
   setEditingTaskText: (text: string) => void
+  editingTaskDate: string
+  setEditingTaskDate: (date: string) => void
   groupBy: string
   setGroupBy: (group: string) => void
 }
@@ -47,6 +49,7 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
   const [expandedDates, setExpandedDates] = useState<string[]>([])
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
   const [editingTaskText, setEditingTaskText] = useState<string>('')
+  const [editingTaskDate, setEditingTaskDate] = useState<string>('')
   const [groupBy, setGroupBy] = useState<string>('date')
 
   return (
@@ -70,6 +73,8 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
         setEditingTaskId,
         editingTaskText,
         setEditingTaskText,
+        editingTaskDate,
+        setEditingTaskDate,
         groupBy,
         setGroupBy
       }}

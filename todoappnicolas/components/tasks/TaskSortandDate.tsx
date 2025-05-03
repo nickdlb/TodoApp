@@ -58,11 +58,9 @@ export default function TaskSortAndDate() {
             onSelect={setDateRange}
             numberOfMonths={2}
           />
-          <div className="flex flex-col gap-2 min-w-[150px]">
-            <span className="text-sm font-semibold mb-1">Atalhos</span>
-            <Button
-              variant="ghost"
-              className="justify-start text-left text-sm"
+          <div className="flex flex-col justify-center gap-2 min-w-[150px]">
+            <span className="text-md font-semibold pl-4">Atalhos</span>
+            <Button variant="ghost" className="justify-start text-left text-sm"
               onClick={() => {
                 const today = new Date()
                 setDateRange({ from: today, to: today })
@@ -70,9 +68,7 @@ export default function TaskSortAndDate() {
             >
               Hoje
             </Button>
-            <Button
-              variant="ghost"
-              className="justify-start text-left text-sm"
+            <Button variant="ghost" className="justify-start text-left text-sm"
               onClick={() => {
                 const yesterday = new Date()
                 yesterday.setDate(yesterday.getDate() - 1)
@@ -81,9 +77,7 @@ export default function TaskSortAndDate() {
             >
               Ontem
             </Button>
-            <Button
-              variant="ghost"
-              className="justify-start text-left text-sm"
+            <Button variant="ghost" className="justify-start text-left text-sm"
               onClick={() => {
                 const end = new Date()
                 const start = new Date()
@@ -93,9 +87,7 @@ export default function TaskSortAndDate() {
             >
               Últimos 7 dias
             </Button>
-            <Button
-              variant="ghost"
-              className="justify-start text-left text-sm"
+            <Button variant="ghost" className="justify-start text-left text-sm"
               onClick={() => {
                 const end = new Date()
                 const start = new Date()
@@ -105,9 +97,7 @@ export default function TaskSortAndDate() {
             >
               Últimos 14 dias
             </Button>
-            <Button
-              variant="ghost"
-              className="justify-start text-left text-sm text-red-600"
+            <Button variant="ghost" className="justify-start text-left text-sm text-red-600"
               onClick={() => setDateRange(undefined)}
             >
               Limpar filtro
