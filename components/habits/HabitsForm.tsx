@@ -8,7 +8,7 @@ import { PlusCircle } from 'lucide-react'
 export interface HabitsFormProps {
   novoHabito: string
   setNovoHabito: (val: string) => void
-  frequenciaTipo: 'diariamente' | 'semanalmente' | 'x' | 'semana'
+  frequenciaTipo: 'diariamente' | 'semanalmente' | 'x' | 'semana' | undefined
   setFrequenciaTipo: (val: 'diariamente' | 'semanalmente' | 'x' | 'semana') => void
   frequenciaX: string
   setFrequenciaX: (val: string) => void
