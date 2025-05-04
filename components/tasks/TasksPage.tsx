@@ -16,7 +16,7 @@ export default function HomeContent() {
 
   useEffect(() => {
     fetchAllTasks()
-  }, [])
+  }, [fetchAllTasks])
 
   return (
     <div className="flex items-center justify-center">

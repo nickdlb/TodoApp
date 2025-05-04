@@ -8,7 +8,7 @@ import { PlusCircle } from 'lucide-react'
 export interface HabitsFormProps {
   novoHabito: string
   setNovoHabito: (val: string) => void
-  frequenciaTipo?: 'diariamente' | 'semanalmente' | 'x' | 'semana'
+  frequenciaTipo: 'diariamente' | 'semanalmente' | 'x' | 'semana'
   setFrequenciaTipo: (val: 'diariamente' | 'semanalmente' | 'x' | 'semana') => void
   frequenciaX: string
   setFrequenciaX: (val: string) => void
@@ -34,7 +34,7 @@ export default function HabitsForm({
       />
 
       <div className="w-full sm:w-[35%]">
-        <Select onValueChange={(val) => setFrequenciaTipo(val as any)} value={frequenciaTipo}>
+        <Select onValueChange={setFrequenciaTipo} value={frequenciaTipo}>
           <SelectTrigger className="bg-gray-800 text-white">
             <SelectValue placeholder="Frequência" />
           </SelectTrigger>
