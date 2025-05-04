@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import './styles/globals.css';
+import './output.css';
 import { ThemeProvider } from "@/components/theme-provider";
 import ToggleDarkMode from "@/components/toggle-darkmode";
 
