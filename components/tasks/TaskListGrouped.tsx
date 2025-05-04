@@ -2,7 +2,7 @@
 
 import { useTaskContext } from '@/contexts/TaskContext'
 import { useTaskActions } from '@/utils/taskUtils'
-import { ChevronDown, ChevronRight, CalendarIcon, Check } from 'lucide-react'
+import { ChevronDown, ChevronRight} from 'lucide-react'
 import { isWithinInterval} from 'date-fns'
 import TaskItem from './TaskItem'
 
@@ -10,8 +10,6 @@ import TaskItem from './TaskItem'
 const TaskListGrouped = () => {
   const {
     tasks, filter, sortCriteria, dateRange,
-    editingTaskId,
-    setEditingTaskId,
     expandedDates, setExpandedDates,
     groupBy
   } = useTaskContext()
