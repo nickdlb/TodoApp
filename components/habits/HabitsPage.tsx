@@ -6,6 +6,7 @@ import { createSupabaseClient } from '@/utils/supabaseclient'
 import HabitsForm from './HabitsForm'
 import HabitsDateSelector from './HabitsDateSelector'
 import HabitsItem from './HabitsItem'
+import WeeklyCarousel from './WeeklyCarousel'
 
 export interface Habito {
   id: string
@@ -30,6 +31,7 @@ const abreviarDias = (dias: string[]): string => {
 }
 
 export default function HabitosPage() {
+  const supabase = createSupabaseClient
   const [habitos, setHabitos] = useState<Habito[]>([])
   const [novoHabito, setNovoHabito] = useState('')
   const [frequenciaTipo, setFrequenciaTipo] = useState<'diariamente' | 'semanalmente' | 'x' | 'semana'>()
@@ -43,7 +45,7 @@ export default function HabitosPage() {
 
   const fetchHabitos = async () => {
     setIsLoading(true)
-    const { data, error } = await createSupabaseClient
+    const { data, error } = await supabase
       .from('habits')
       .select('*')
       .order('created_at', { ascending: false })
@@ -101,7 +103,7 @@ export default function HabitosPage() {
       week_days = diasSelecionados
     }
 
-    const { data, error } = await createSupabaseClient
+    const { data, error } = await supabase
       .from('habits')
       .insert({ text: novoHabito.trim(), frequency, week_days })
       .select()
@@ -116,14 +118,12 @@ export default function HabitosPage() {
       setHabitos((prev) => [data[0], ...prev])
       toast.success('Hábito adicionado!')
       setNovoHabito('')
-      setFrequenciaTipo(undefined)
-      setFrequenciaX('')
       setDiasSelecionados([])
     }
   }
 
   const handleDeleteHabito = async (id: string) => {
-    const { error } = await createSupabaseClient.from('habits').delete().eq('id', id)
+    const { error } = await supabase.from('habits').delete().eq('id', id)
     if (error) {
       toast.error('Erro ao excluir hábito.')
       return
@@ -133,7 +133,7 @@ export default function HabitosPage() {
   }
 
   const handleEditHabito = async (id: string, newText: string) => {
-    const { error } = await createSupabaseClient.from('habits').update({ text: newText }).eq('id', id)
+    const { error } = await supabase.from('habits').update({ text: newText }).eq('id', id)
     if (error) {
       toast.error('Erro ao editar hábito.')
       return
@@ -183,6 +183,8 @@ export default function HabitosPage() {
           ))
         )}
       </ul>
+
+      <WeeklyCarousel habitos={habitos} />
     </div>
   )
 }

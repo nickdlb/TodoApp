@@ -1,7 +1,13 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { PlusCircle } from 'lucide-react'
 
