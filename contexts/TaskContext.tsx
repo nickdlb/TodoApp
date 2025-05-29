@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { DateRange } from 'react-day-picker'
 
 export interface Task {
@@ -10,6 +10,7 @@ export interface Task {
   status: string
   closed_at: string | null
   date_task: string
+  tags: string
 }
 
 interface TaskContextProps {
@@ -35,12 +36,14 @@ interface TaskContextProps {
   setEditingTaskDate: (date: string) => void
   groupBy: string
   setGroupBy: (group: string) => void
+  tagFilter: string
+  setTagFilter: (tag: string) => void
 }
 
 const TaskContext = createContext<TaskContextProps | undefined>(undefined)
 
 export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [allTasks, setAllTasks] = useState<Task[]>([])
   const [filter, setFilter] = useState<string>('all')
   const [sortCriteria, setSortCriteria] = useState<string>('date-desc')
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
@@ -51,12 +54,63 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
   const [editingTaskText, setEditingTaskText] = useState<string>('')
   const [editingTaskDate, setEditingTaskDate] = useState<string>('')
   const [groupBy, setGroupBy] = useState<string>('date')
+  const [tagFilter, setTagFilter] = useState<string>('')
+
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    let filteredTasks = allTasks
+
+    if (filter !== 'all') {
+      filteredTasks = filteredTasks.filter(task => task.status === filter)
+    }
+
+    if (tagFilter) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.tags.toLowerCase().includes(tagFilter.toLowerCase())
+      )
+    }
+
+    return filteredTasks
+  })
+
+  useEffect(() => {
+    let filteredTasks = allTasks
+
+    if (filter !== 'all') {
+      filteredTasks = filteredTasks.filter(task => task.status === filter)
+    }
+
+    if (tagFilter) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.tags.toLowerCase().includes(tagFilter.toLowerCase())
+      )
+    }
+
+    setTasks(filteredTasks)
+  }, [allTasks, filter, tagFilter])
+
+  const setAllTasksAndFilter = (newTasks: Task[]) => {
+    setAllTasks(newTasks)
+
+    let filteredTasks = newTasks
+
+    if (filter !== 'all') {
+      filteredTasks = filteredTasks.filter(task => task.status === filter)
+    }
+
+    if (tagFilter) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.tags.toLowerCase().includes(tagFilter.toLowerCase())
+      )
+    }
+
+    setTasks(filteredTasks)
+  }
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
-        setTasks,
+        setTasks: setAllTasksAndFilter,
         filter,
         setFilter,
         sortCriteria,
@@ -76,7 +130,9 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
         editingTaskDate,
         setEditingTaskDate,
         groupBy,
-        setGroupBy
+        setGroupBy,
+        tagFilter,
+        setTagFilter
       }}
     >
       {children}

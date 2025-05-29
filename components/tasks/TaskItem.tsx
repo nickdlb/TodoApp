@@ -75,7 +75,14 @@ export default function TaskItem({ task }: TaskItemProps) {
             className="pl-1 text-white bg-gray-200 border-none !ring-0 h-5"
           />
         ) : (
-          <span className='ml-1 text-sm h-5'>{task.text}</span>
+          <>
+            <span className='ml-1 text-sm h-5'>{task.text}</span>
+            {task.tags && (
+              <div className="ml-1 text-xs text-gray-400 font-semibold">
+                Tags: {task.tags}
+              </div>
+            )}
+          </>
         )}
         {editingTaskId === task.id ? (
           <div className="ml-1 mt-1 text-xs text-gray-400 font-semibold flex items-center gap-2">

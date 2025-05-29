@@ -15,7 +15,7 @@ export const useTaskActions = () => {
   const fetchAllTasks = async () => {
     const { data, error } = await createSupabaseClient
       .from('tarefas')
-      .select('*')
+      .select('*, tags')
     if (error) {
       console.error('Erro ao buscar tarefas:', error)
     } else {
@@ -23,7 +23,7 @@ export const useTaskActions = () => {
     }
   }
 
-  const enviarFormulario = async (tarefa: string, createdAt: Date) => {
+  const enviarFormulario = async (tarefa: string, createdAt: Date, tags: string) => {
     if (tarefa.trim() === '') return
 
     const { data, error } = await createSupabaseClient
@@ -31,6 +31,7 @@ export const useTaskActions = () => {
       .insert({
         text: tarefa.trim(),
         date_task: createdAt.toISOString(),
+        tags: tags.trim(),
       })
       .select()
 

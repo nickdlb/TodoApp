@@ -2,9 +2,10 @@
 
 import { useTaskContext } from '@/contexts/TaskContext'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default function TaskFilterBar() {
-  const { filter, setFilter } = useTaskContext()
+  const { filter, setFilter, tagFilter, setTagFilter } = useTaskContext()
 
   const filters = ['Ativa', 'Concluida', 'all']
 
@@ -23,6 +24,13 @@ export default function TaskFilterBar() {
           {status === 'all' ? 'Todas' : status}
         </Button>
       ))}
+      <Input
+        type="text"
+        placeholder="Filtrar por tag"
+        value={tagFilter}
+        onChange={(e) => setTagFilter(e.target.value)}
+        className="bg-gray-800 text-white !ring-0"
+      />
     </div>
   )
 }
