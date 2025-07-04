@@ -1,7 +1,6 @@
 'use client'
 
 import { useTaskContext } from '@/contexts/TaskContext'
-import { useTaskActions } from '@/utils/taskUtils'
 import { ChevronDown, ChevronRight} from 'lucide-react'
 import { isWithinInterval} from 'date-fns'
 import TaskItem from './TaskItem'
@@ -33,21 +32,6 @@ const TaskListGrouped = () => {
     )
     : sortedTasks
 
-  const grouped = groupBy === 'date'
-    ? tasksInRange.reduce((acc, task) => {
-      const key = new Date(task.date_task).toLocaleDateString('pt-BR')
-      if (!acc[key]) acc[key] = []
-      acc[key].push(task)
-      return acc
-    }, {} as Record<string, typeof tasks>)
-    : { '': tasksInRange }
-
-  const toggleDate = (date: string) => {
-    setExpandedDates((prev) =>
-      prev.includes(date) ? prev.filter(d => d !== date) : [...prev, date]
-    )
-  }
-
   const groupByTag = (tasks: typeof sortedTasks) => {
     return tasks.reduce((acc, task) => {
       const key = task.tags || 'Sem tag';
@@ -57,22 +41,23 @@ const TaskListGrouped = () => {
     }, {} as Record<string, typeof tasks>);
   };
 
-  const grouped = groupBy === 'date'
-    ? tasksInRange.reduce((acc, task) => {
-      const key = new Date(task.date_task).toLocaleDateString('pt-BR')
-      if (!acc[key]) acc[key] = []
-      acc[key].push(task)
-      return acc
-    }, {} as Record<string, typeof tasks>)
-    : groupBy === 'tag'
+  const grouped =
+    groupBy === 'date'
+      ? tasksInRange.reduce((acc, task) => {
+          const key = new Date(task.date_task).toLocaleDateString('pt-BR');
+          if (!acc[key]) acc[key] = [];
+          acc[key].push(task);
+          return acc;
+        }, {} as Record<string, typeof tasks>)
+      : groupBy === 'tag'
       ? groupByTag(tasksInRange)
-      : { '': tasksInRange }
+      : { '': tasksInRange };
 
   const toggleDate = (date: string) => {
-    setExpandedDates((prev) =>
+    setExpandedDates(prev =>
       prev.includes(date) ? prev.filter(d => d !== date) : [...prev, date]
-    )
-  }
+    );
+  };
 
   return (
     <div className="scrollbarcss mt-2 px-4 pt-3 pb-5 max-h-[500px] overflow-y-auto bg-gray-800 rounded-xl min-w-[840px]">
